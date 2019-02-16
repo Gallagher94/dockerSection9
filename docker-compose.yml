@@ -7,6 +7,9 @@ services:
       context: ./nginx
     ports:
       - "3050:80" # local machine port 3050 mapped to docker contianer port 80
+    depends_on:
+      - client
+      - api
   postgres:
     image: "postgres:latest"
   redis:
