@@ -19,8 +19,8 @@ services:
       dockerfile: Dockerfile.dev
       context: ./server
     volumes:
-      - /app/node_modules
-      - ./server:/app
+      - /app/node_modules # Inside the container do not override this folder. just leave it as it is
+      - ./server:/app # Anyitme our app tries to access anything other than node_modules it will be redirected to the local folder strucutre meaning we dont have to rebuild our image
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -37,11 +37,12 @@ services:
       - /app/node_modules
       - ./client:/app
   worker:
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     build:
       dockerfile: Dockerfile.dev
       context: ./worker
     volumes:
       - /app/node_modules
       - ./worker:/app
-      # The first time this file is run, it needs to download form the internet.
-      # for this reason it may crash the first time it runs. Dont be alarmed jut re run it.
