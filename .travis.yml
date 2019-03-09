@@ -17,7 +17,7 @@ after_success:
   - docker build -t gallagher94/multi-nginx  ./nginx
   - docker build -t gallagher94/multi-server ./server
   - docker build -t gallagher94/multi-worker ./worker
-  # Login and push images to docker hub
+  # Login and push images to docker hub login
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push gallagher94/multi-client
   - docker push gallagher94/multi-nginx
