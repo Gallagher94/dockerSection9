@@ -1,12 +1,16 @@
+#  1 we are using docker meaning we need root admin previligies and this is what does that
 sudo: required
+
+# we are using docker so we need the docker cli
 services:
   - docker
 
+# 1 what we want to happen before the tests run. usually set up before we execute tests
 before_install:
   - docker build -t gallagher94/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run gallagher94/react-test npm test -- -- coverage
+  - docker run gallagher94/react-test npm run test -- -- coverage
 
 after_success:
   - docker build -t gallagher94/multi-client ./client
